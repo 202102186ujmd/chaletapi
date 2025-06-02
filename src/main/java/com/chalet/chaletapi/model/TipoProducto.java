@@ -1,5 +1,6 @@
 package com.chalet.chaletapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,5 +24,6 @@ public class TipoProducto {
     private String descripcion;
 
     @OneToMany(mappedBy = "tipoProducto", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Producto> productos;
 }

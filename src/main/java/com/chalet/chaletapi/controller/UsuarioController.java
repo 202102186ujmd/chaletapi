@@ -6,6 +6,7 @@ import com.chalet.chaletapi.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    private final PasswordEncoder passwordEncoder; // ✅ inyectado correctamente
 
     @GetMapping
     public ResponseEntity<List<Usuario>> listarTodos() {
@@ -41,7 +43,7 @@ public class UsuarioController {
         Usuario usuario = new Usuario();
         usuario.setNombre(request.getNombre());
         usuario.setEmail(request.getEmail());
-        usuario.setPassword(request.getPassword());
+        usuario.setPassword(passwordEncoder.encode(request.getPassword())); // ✅ codifica
         usuario.setRol(request.getRol());
         return ResponseEntity.ok(usuarioService.guardar(usuario));
     }
@@ -51,7 +53,7 @@ public class UsuarioController {
         return usuarioService.obtenerPorId(id).map(u -> {
             u.setNombre(request.getNombre());
             u.setEmail(request.getEmail());
-            u.setPassword(request.getPassword());
+            u.setPassword(passwordEncoder.encode(request.getPassword())); // ✅ codifica también al actualizar
             u.setRol(request.getRol());
             return ResponseEntity.ok(usuarioService.guardar(u));
         }).orElse(ResponseEntity.notFound().build());
