@@ -9,6 +9,9 @@ public class UsuarioRequest {
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
 
+    @NotBlank
+    private String username;
+
     @NotBlank(message = "El email es obligatorio")
     @Email(message = "Debe ser un email válido")
     private String email;

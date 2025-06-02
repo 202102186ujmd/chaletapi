@@ -1,5 +1,6 @@
 package com.chalet.chaletapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,5 +32,6 @@ public class Producto {
 
     @ManyToOne
     @JoinColumn(name = "tipo_producto_id")
+    @JsonIgnore
     private TipoProducto tipoProducto;
 }
